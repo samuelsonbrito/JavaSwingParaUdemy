@@ -161,11 +161,11 @@ public class ViewProduto extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "DESCRIÇÃO", "QTD", "PREÇO"
+                "ID", "DESCRIÇÃO", "QTD", "PREÇO", "CATEGORIA"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

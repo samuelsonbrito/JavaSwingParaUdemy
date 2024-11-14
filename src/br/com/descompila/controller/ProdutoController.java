@@ -10,14 +10,9 @@ import br.com.descompila.model.entity.Produto;
 import br.com.descompila.model.dao.ProdutoDAO;
 import br.com.descompila.utils.ValidationUtils;
 import br.com.descompila.utils.validation.Validador;
-import br.com.descompila.utils.validation.ValidadorCampoVazio;
-import br.com.descompila.utils.validation.ValidadorComposite;
-import br.com.descompila.utils.validation.ValidadorNumeroDecimal;
-import br.com.descompila.utils.validation.ValidadorNumeroInteiro;
 import br.com.descompila.view.produto.ViewProduto;
 import java.awt.Color;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -67,6 +62,12 @@ public class ProdutoController {
             JOptionPane.showMessageDialog(view, "Preço não pode ser vazio", "Alerta", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
+        if("".equals(view.getCbCategoria().getSelectedItem())){
+            JOptionPane.showMessageDialog(view, "Selecione uma categoria", "Alerta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         
         boolean validNumeroInteiro = ValidationUtils.validarNumeroInteiro(view.getTxtQtd().getText());
         
@@ -142,7 +143,8 @@ public class ProdutoController {
                     p.getId(),
                     p.getNome(),
                     p.getQuantidade(),
-                    p.getValor()
+                    p.getValor(),
+                    p.getCategoria()
                 });
 
             }
@@ -183,16 +185,10 @@ public class ProdutoController {
             view.getTxtPreco().setText(view.getjTProdutos().getValueAt(view.getjTProdutos().getSelectedRow(), 3).toString());
             
             
-            Long produtoId = (Long) view.getjTProdutos().getValueAt(view.getjTProdutos().getSelectedRow(), 0);
-            
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            try {
-                Produto produtoSelecionado = produtoDAO.buscarPorId(produtoId);
-                Categoria categoriaSelecionada = produtoSelecionado.getCategoria();
-                view.getCbCategoria().setSelectedItem(categoriaSelecionada);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao buscar categoria");
-            }
+            Categoria categoriaSelecionada = (Categoria) view.getjTProdutos().getValueAt(view.getjTProdutos().getSelectedRow(), 4);
+
+            view.getCbCategoria().setSelectedItem(categoriaSelecionada);
+
         }
     }
 
@@ -226,6 +222,7 @@ public class ProdutoController {
         CategoriaDAO categoriaDAO = new CategoriaDAO();
 
         try {
+            view.getCbCategoria().addItem("");
             for (Categoria categoria : categoriaDAO.findAll()) {
                 view.getCbCategoria().addItem(categoria);
             }
