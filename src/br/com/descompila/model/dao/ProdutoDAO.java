@@ -68,6 +68,38 @@ public class ProdutoDAO {
 
         return produtos;
     }
+    
+    public Produto buscarPorId(Long id) throws Exception{
+
+        var sql = "select p.id as pid, p.descricao as pdesc, qtd, valor, c.id as cid, c.descricao as cdesc from produto p inner join categoria c on c.id = p.categoria_id where p.id = ?";
+        
+        Produto produto = new Produto();
+        
+        try (var conexao = ConnectionFactory.getConnection();
+            var stmt = conexao.prepareStatement(sql)) {
+                stmt.setLong(1, id);
+                try(var rs = stmt.executeQuery()){
+                    while (rs.next()) {
+                        
+                        produto.setId(rs.getLong("pid"));
+                        produto.setNome(rs.getString("pdesc"));
+                        produto.setQuantidade(rs.getInt("qtd"));
+                        produto.setValor(rs.getDouble("valor"));
+
+                        Categoria categoria = new Categoria();
+                        categoria.setId(rs.getLong("cid"));
+                        categoria.setNome(rs.getString("cdesc"));
+
+                        produto.setCategoria(categoria);
+                    }
+                }
+
+        } catch (SQLException e) {
+            throw new Exception(e);
+        }
+
+        return produto;
+    }
 
     public void atualizar(Produto produto) throws SQLException {
 
