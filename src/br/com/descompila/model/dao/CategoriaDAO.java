@@ -25,7 +25,8 @@ public class CategoriaDAO {
             stmt.setString(1, categoria.getNome());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-           throw new Exception(ex);
+            System.err.println(ex);
+            throw new Exception(ex);
         }
     }
 
@@ -33,14 +34,14 @@ public class CategoriaDAO {
 
         var sql = "SELECT * FROM categoria";
 
-        List<Categoria> categorias = new ArrayList<>();
+        var categorias = new ArrayList<Categoria>();
 
         try (var conn = ConnectionFactory.getConnection();
                 var stmt = conn.prepareStatement(sql)){
             
             try(var rs = stmt.executeQuery()){
                 while (rs.next()) {
-                    Categoria categoria = new Categoria();
+                    var categoria = new Categoria();
                     categoria.setId(rs.getLong("id"));
                     categoria.setNome(rs.getString("descricao"));
                     categorias.add(categoria);
@@ -48,6 +49,7 @@ public class CategoriaDAO {
             }
             
         } catch (SQLException ex) {
+            System.err.println(ex);
             throw new Exception(ex);
         }
 
@@ -64,6 +66,7 @@ public class CategoriaDAO {
             stmt.setLong(2, categoria.getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
+            System.err.println(ex);
             throw new Exception(ex);
         }
     }
@@ -78,6 +81,7 @@ public class CategoriaDAO {
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
+            System.err.println(ex);
             throw new Exception(ex);
         }
     }

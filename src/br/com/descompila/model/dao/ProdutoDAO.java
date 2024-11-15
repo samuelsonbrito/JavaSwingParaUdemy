@@ -29,11 +29,12 @@ public class ProdutoDAO {
             stmt.setLong(4, produto.getCategoria().getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
+            System.err.println(ex);
             throw new SQLException("Erro ao inserir", ex);
         }
     }
 
-    public List<Produto> findAll() throws SQLException {
+    public List<Produto> buscarTodos() throws SQLException {
 
         var sql = "select p.id as pid, p.descricao as pdesc, qtd, valor, c.id as cid, c.descricao as cdesc from produto p inner join categoria c on c.id = p.categoria_id";
         
@@ -45,14 +46,14 @@ public class ProdutoDAO {
             try (var rs = stmt.executeQuery()){
                 while (rs.next()) {
 
-                    Produto produto = new Produto();
+                    var produto = new Produto();
 
                     produto.setId(rs.getLong("pid"));
                     produto.setNome(rs.getString("pdesc"));
                     produto.setQuantidade(rs.getInt("qtd"));
                     produto.setValor(rs.getDouble("valor"));
 
-                    Categoria categoria = new Categoria();
+                    var categoria = new Categoria();
                     categoria.setId(rs.getLong("cid"));
                     categoria.setNome(rs.getString("cdesc"));
 
@@ -63,17 +64,18 @@ public class ProdutoDAO {
             }
             
         } catch (SQLException ex) {
+            System.err.println(ex);
             throw new SQLException("Erro ao listar", ex);
         } 
 
         return produtos;
     }
     
-    public Produto buscarPorId(Long id) throws Exception{
+    public Produto buscarPorId(Long id) throws SQLException{
 
         var sql = "select p.id as pid, p.descricao as pdesc, qtd, valor, c.id as cid, c.descricao as cdesc from produto p inner join categoria c on c.id = p.categoria_id where p.id = ?";
         
-        Produto produto = new Produto();
+        var produto = new Produto();
         
         try (var conexao = ConnectionFactory.getConnection();
             var stmt = conexao.prepareStatement(sql)) {
@@ -86,7 +88,7 @@ public class ProdutoDAO {
                         produto.setQuantidade(rs.getInt("qtd"));
                         produto.setValor(rs.getDouble("valor"));
 
-                        Categoria categoria = new Categoria();
+                        var categoria = new Categoria();
                         categoria.setId(rs.getLong("cid"));
                         categoria.setNome(rs.getString("cdesc"));
 
@@ -94,8 +96,9 @@ public class ProdutoDAO {
                     }
                 }
 
-        } catch (SQLException e) {
-            throw new Exception(e);
+        } catch (SQLException ex) {
+            System.err.println(ex);
+            throw new SQLException(ex);
         }
 
         return produto;
@@ -115,6 +118,7 @@ public class ProdutoDAO {
             stmt.setLong(5, produto.getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
+            System.err.println(ex);
             throw new SQLException("Erro ao atualizar", ex);
         }
     }
@@ -128,13 +132,14 @@ public class ProdutoDAO {
             stmt.setLong(1, produto.getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
+            System.err.println(ex);
             throw new SQLException("Erro ao excluir", ex);
         }
     }
     
-    public List<Produto> readForDesc(String desc) throws SQLException {
+    public List<Produto> buscarPorDescricao(String desc) throws SQLException {
 
-        List<Produto> produtos = new ArrayList<>();
+        var produtos = new ArrayList<Produto>();
 
         try (var conn = ConnectionFactory.getConnection();
                 var stmt = conn.prepareStatement("select p.id as pid, p.descricao as pdesc, qtd, valor, c.id as cid, c.descricao as cdesc from produto p inner join categoria c on c.id = p.categoria_id WHERE p.descricao LIKE ?")){
@@ -144,14 +149,13 @@ public class ProdutoDAO {
             try(var rs = stmt.executeQuery()){
                 while (rs.next()) {
 
-                    Produto produto = new Produto();
-
+                    var produto = new Produto();
                     produto.setId(rs.getLong("pid"));
                     produto.setNome(rs.getString("pdesc"));
                     produto.setQuantidade(rs.getInt("qtd"));
                     produto.setValor(rs.getDouble("valor"));
 
-                    Categoria categoria = new Categoria();
+                    var categoria = new Categoria();
                     categoria.setId(rs.getLong("cid"));
                     categoria.setNome(rs.getString("cdesc"));
 
@@ -162,6 +166,7 @@ public class ProdutoDAO {
             }
 
         } catch (SQLException ex) {
+            System.err.println(ex);
             throw new SQLException("Erro ao excluir", ex);
         }
         

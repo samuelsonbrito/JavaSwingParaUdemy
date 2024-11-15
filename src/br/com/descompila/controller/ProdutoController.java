@@ -127,6 +127,7 @@ public class ProdutoController {
             JOptionPane.showMessageDialog(view, "Produto salvo", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            System.err.println(ex);
         }
     }
 
@@ -137,7 +138,7 @@ public class ProdutoController {
         ProdutoDAO pdao = new ProdutoDAO();
 
         try {
-            for (Produto p : pdao.findAll()) {
+            for (Produto p : pdao.buscarTodos()) {
 
                 modelo.addRow(new Object[]{
                     p.getId(),
@@ -242,13 +243,14 @@ public class ProdutoController {
         ProdutoDAO pdao = new ProdutoDAO();
 
         try {
-            for (Produto p : pdao.readForDesc(view.getTxtBuscaDesc().getText())) {
+            for (Produto p : pdao.buscarPorDescricao(view.getTxtBuscaDesc().getText())) {
 
                 modelo.addRow(new Object[]{
                     p.getId(),
                     p.getNome(),
                     p.getQuantidade(),
-                    p.getValor()
+                    p.getValor(),
+                    p.getCategoria()
                 });
 
             }

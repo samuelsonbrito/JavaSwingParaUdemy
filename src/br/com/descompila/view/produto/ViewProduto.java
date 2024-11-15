@@ -23,7 +23,7 @@ public class ViewProduto extends javax.swing.JFrame {
      */
     public ViewProduto() {
         initComponents();
-        this.controller = new ProdutoController(this);
+        controller = new ProdutoController(this);
 
         controller.carregarTabela();
         controller.carregarComboCategorias();
@@ -116,9 +116,10 @@ public class ViewProduto extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(82, 82, 82))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(82, 82, 82))
+                            .addComponent(cbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnCadastrar)
                         .addGap(18, 18, 18)
@@ -228,8 +229,7 @@ public class ViewProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jTProdutosMouseClicked
 
     private void jTProdutosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTProdutosKeyReleased
-        // TODO add your handling code here:
-
+ 
         controller.preencherDadosNosCampos();
     }//GEN-LAST:event_jTProdutosKeyReleased
 
