@@ -123,7 +123,7 @@ public class ProdutoDAO {
         }
     }
 
-    public void delete(Produto produto) throws SQLException {
+    public void excluir(Produto produto) throws SQLException {
 
         var sql = "DELETE FROM produto WHERE id = ?";
 

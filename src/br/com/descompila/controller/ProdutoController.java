@@ -163,7 +163,7 @@ public class ProdutoController {
             p.setId((long) view.getjTProdutos().getValueAt(view.getjTProdutos().getSelectedRow(), 0));
 
             try {
-                dao.delete(p);
+                dao.excluir(p);
                 view.getTxtDesc().setText("");
                 view.getTxtQtd().setText("");
                 view.getTxtPreco().setText("");

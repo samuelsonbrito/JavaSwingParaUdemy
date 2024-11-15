@@ -71,7 +71,7 @@ public class CategoriaDAO {
         }
     }
 
-    public boolean delete(Categoria categoria) throws Exception {
+    public boolean excluir(Categoria categoria) throws Exception {
 
         var sql = "DELETE FROM categoria WHERE id = ?";
 
