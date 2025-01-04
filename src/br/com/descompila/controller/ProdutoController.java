@@ -9,14 +9,12 @@ import br.com.descompila.model.entity.Categoria;
 import br.com.descompila.model.entity.Produto;
 import br.com.descompila.model.dao.ProdutoDAO;
 import br.com.descompila.utils.ValidationUtils;
-import br.com.descompila.utils.validation.Validador;
 import br.com.descompila.view.produto.ViewProduto;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -31,19 +29,6 @@ public class ProdutoController {
     public ProdutoController(ViewProduto view) {
         this.view = view;
         ordenarTabela();
-    }
-    
-    // Método para validar um campo usando o validador
-    private boolean validarCampo(JTextField campo, Validador validador) {
-        String valor = campo.getText();
-        if (!validador.validar(valor)) {
-            campo.setBackground(Color.PINK);
-            JOptionPane.showMessageDialog(view, validador.getMensagemErro(), "Alerta", JOptionPane.WARNING_MESSAGE);
-            return false;
-        } else {
-            campo.setBackground(Color.WHITE);
-            return true;
-        }
     }
 
     public void salvar() {
@@ -88,26 +73,6 @@ public class ProdutoController {
         } else {
             view.getTxtQtd().setBackground(Color.WHITE);
         }
-        
-        
-        /*
-        TODO melhoria nos validadores: 
-        
-        // Usando os validadores
-        if (!validarCampo(view.getTxtDesc(), new ValidadorCampoVazio("Descrição não pode ser vazia"))) return;
-        if (!validarCampo(view.getTxtQtd(), new ValidadorComposite(
-                Arrays.asList(
-                        new ValidadorCampoVazio("Quantidade não pode ser vazia"),
-                        new ValidadorNumeroInteiro("Quantidade deve ser um número inteiro")
-                )
-        ))) return;
-        if (!validarCampo(view.getTxtPreco(), new ValidadorComposite(
-                Arrays.asList(
-                        new ValidadorCampoVazio("Preço não pode ser vazio"),
-                        new ValidadorNumeroDecimal("Preço deve ser um número decimal válido")
-                )
-        ))) return;
-*/
         
         try {
 

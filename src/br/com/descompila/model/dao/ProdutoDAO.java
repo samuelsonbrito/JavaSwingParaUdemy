@@ -38,7 +38,7 @@ public class ProdutoDAO {
 
         var sql = "select p.id as pid, p.descricao as pdesc, qtd, valor, c.id as cid, c.descricao as cdesc from produto p inner join categoria c on c.id = p.categoria_id";
         
-        List<Produto> produtos = new ArrayList<>();
+        var produtos = new ArrayList<Produto>();
 
         try (var conn = ConnectionFactory.getConnection();
                 var stmt = conn.prepareStatement(sql)){
